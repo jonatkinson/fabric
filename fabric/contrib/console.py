@@ -18,10 +18,7 @@ def confirm(question, default=True):
     assumed. This can be changed by specifying ``default=False``.
     """
     # Set up suffix
-    if default:
-        suffix = "Y/n"
-    else:
-        suffix = "y/N"
+    suffix = 'Y/n' if default else 'y/N'
     # Loop till we get something we like
     while True:
         response = prompt("%s [%s] " % (question, suffix)).lower()

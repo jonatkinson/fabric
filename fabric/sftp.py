@@ -50,7 +50,7 @@ class SFTP(object):
         dirpart, pattern = os.path.split(path)
         rlist = self.ftp.listdir(dirpart)
 
-        names = fnfilter([f for f in rlist if not f[0] == '.'], pattern)
+        names = fnfilter([f for f in rlist if f[0] != '.'], pattern)
         if len(names):
             return [os.path.join(dirpart, name) for name in names]
         else:

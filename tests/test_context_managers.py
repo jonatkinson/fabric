@@ -30,11 +30,11 @@ def test_cwd_with_absolute_paths():
     """
     cd() should append arg if non-absolute or overwrite otherwise
     """
-    existing = '/some/existing/path' 
-    additional = 'another'
-    absolute = '/absolute/path'
+    existing = '/some/existing/path'
     with settings(cwd=existing):
+        absolute = '/absolute/path'
         with cd(absolute):
             eq_(env.cwd, absolute)
+        additional = 'another'
         with cd(additional):
             eq_(env.cwd, existing + '/' + additional)

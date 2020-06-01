@@ -241,10 +241,10 @@ def contains(filename, text, exact=False, use_sudo=False):
         Swapped the order of the ``filename`` and ``text`` arguments to be
         consistent with other functions in this module.
     """
-    func = use_sudo and sudo or run
     if exact:
         text = "^%s$" % text
     with settings(hide('everything'), warn_only=True):
+        func = use_sudo and sudo or run
         return func('egrep "%s" "%s"' % (
             text.replace('"', r'\"'),
             filename.replace('"', r'\"')

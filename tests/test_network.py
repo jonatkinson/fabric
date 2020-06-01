@@ -73,11 +73,11 @@ class TestNetwork(FabricTest):
 
     def test_normalization_of_empty_input(self):
         empties = ('', '', '')
+        template = "normalize() returns empty strings for %s input"
         for description, input in (
-            ("empty string", ''),
-            ("None", None)
-        ):
-            template = "normalize() returns empty strings for %s input"
+                ("empty string", ''),
+                ("None", None)
+            ):
             eq_.description = template % description
             yield eq_, normalize(input), empties
             del eq_.description
@@ -182,8 +182,8 @@ class TestNetwork(FabricTest):
         """
         Sudo prompts shouldn't screw up output capturing
         """
-        cmd = "ls /simple"
         with hide('everything'):
+            cmd = "ls /simple"
             eq_(sudo(cmd), RESPONSES[cmd])
 
 

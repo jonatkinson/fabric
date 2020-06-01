@@ -140,10 +140,7 @@ def password_response(password, times_called=None, silent=True):
     """
     fake = Fake('getpass', callable=True)
     # Assume stringtype or iterable, turn into mutable iterable
-    if isinstance(password, StringTypes):
-        passwords = [password]
-    else:
-        passwords = list(password)
+    passwords = [password] if isinstance(password, StringTypes) else list(password)
     # Optional echoing of prompt to mimic real behavior of getpass
     # NOTE: also echo a newline if the prompt isn't a "passthrough" from the
     # server (as it means the server won't be sending its own newline for us).
@@ -165,7 +162,7 @@ def password_response(password, times_called=None, silent=True):
 
 def _assert_contains(needle, haystack, invert):
     matched = re.search(needle, haystack, re.M)
-    if (invert and matched) or (not invert and not matched):
+    if (invert and matched) or not (invert or matched):
         raise AssertionError("r'%s' %sfound in '%s'" % (
             needle,
             "" if invert else "not ",

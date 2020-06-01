@@ -69,7 +69,7 @@ def _update_code_version(force):
     raw_input("Work has been done since last tag, version update is needed. Hit Enter to load version info in your editor: ")
     local("$EDITOR %s" % version_file, capture=False)
     # Try to detect whether user bailed out of the edit
-    if not local("git diff -- %s" % version_file) and not force:
+    if not (local("git diff -- %s" % version_file) or force):
         abort("You seem to have aborted the file edit, so I'm aborting too.")
     # Reload version module to get new version
     reload(fabric.version)

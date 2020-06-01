@@ -39,8 +39,8 @@ def load_settings(path):
     if os.path.exists(path):
         comments = lambda s: s and not s.startswith("#")
         settings = filter(comments, open(path, 'r'))
-        return dict((k.strip(), v.strip()) for k, _, v in
-            [s.partition('=') for s in settings])
+        return {k.strip(): v.strip() for k, _, v in
+                    [s.partition('=') for s in settings]}
     # Handle nonexistent or empty settings file
     return {}
 
@@ -71,20 +71,22 @@ def find_fabfile():
         # If so, expand home-directory markers and test for existence
         for name in names:
             expanded = os.path.expanduser(name)
-            if os.path.exists(expanded):
-                if name.endswith('.py') or _is_package(expanded):
-                    return os.path.abspath(expanded)
+            if os.path.exists(expanded) and (
+                name.endswith('.py') or _is_package(expanded)
+            ):
+                return os.path.abspath(expanded)
     else:
         # Otherwise, start in cwd and work downwards towards filesystem root
         path = '.'
         # Stop before falling off root of filesystem (should be platform
-        # agnostic)
+                # agnostic)
         while os.path.split(os.path.abspath(path))[1]:
             for name in names:
                 joined = os.path.join(path, name)
-                if os.path.exists(joined):
-                    if name.endswith('.py') or _is_package(joined):
-                        return os.path.abspath(joined)
+                if os.path.exists(joined) and (
+                    name.endswith('.py') or _is_package(joined)
+                ):
+                    return os.path.abspath(joined)
             path = os.path.join('..', path)
     # Implicit 'return None' if nothing was found
 

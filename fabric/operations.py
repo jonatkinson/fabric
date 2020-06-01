@@ -1028,7 +1028,7 @@ def reboot(wait):
     if output.running:
         puts("Waiting for reboot: ", flush=True, end='')
         per_tick = 5
-        for second in range(int(wait / per_tick)):
+        for _ in range(int(wait / per_tick)):
             puts(".", show_prefix=False, flush=True, end='')
             time.sleep(per_tick)
         puts("done.\n", show_prefix=False, flush=True)

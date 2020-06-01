@@ -26,7 +26,7 @@ def test_runs_once_runs_only_once():
     """
     func = fake_function(expect_call=True).times_called(1)
     task = decorators.runs_once(func)
-    for i in range(2):
+    for _ in range(2):
         task()
 
 
@@ -36,5 +36,5 @@ def test_runs_once_returns_same_value_each_run():
     """
     return_value = "foo"
     task = decorators.runs_once(fake_function().returns(return_value))
-    for i in range(2):
+    for _ in range(2):
         eq_(task(), return_value)

@@ -555,8 +555,8 @@ class TestFileTransfers(FabricTest):
         fake_file = StringIO()
         fake_file.write("testing file-like objects in put()")
         pointer = fake_file.tell()
-        target = '/new_file.txt'
         with hide('everything'):
+            target = '/new_file.txt'
             put(fake_file, target)
             get(target, local)
         eq_contents(local, fake_file.getvalue())
@@ -697,8 +697,8 @@ class TestFileTransfers(FabricTest):
         """
         put() should return a one-item iterable when uploading from a StringIO
         """
-        f = 'uploaded.txt'
         with hide('everything'):
+            f = 'uploaded.txt'
             eq_(put(StringIO('contents'), f), [f])
 
 

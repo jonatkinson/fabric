@@ -260,7 +260,7 @@ class FakeSFTPServer(ssh.SFTPServerInterface):
             if cut not in children:
                 children.append(cut)
         results = [self.stat(os.path.join(*x)) for x in children]
-        bad = not results or any(x == ssh.SFTP_NO_SUCH_FILE for x in results)
+        bad = not results or ssh.SFTP_NO_SUCH_FILE in results
         return ssh.SFTP_NO_SUCH_FILE if bad else results
 
     def open(self, path, flags, attr):
@@ -400,7 +400,7 @@ def serve_responses(responses, files, passwords, pubkeys, port):
         def sudo_password(self):
             # Give user 3 tries, as is typical
             passed = False
-            for x in range(3):
+            for _ in range(3):
                 self.channel.send(env.sudo_prompt)
                 password = self.channel.recv(65535).strip()
                 # Spit back newline to fake the echo of user's
